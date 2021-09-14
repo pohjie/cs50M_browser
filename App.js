@@ -6,17 +6,23 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SearchBarScreen from './screens/SearchBarScreen';
+import SearchResultScreen from './screens/SearchResultScreen';
+import MovieDetailsScreen from './screens/MovieDetailsScreen';
 
 const Stack = createNativeStackNavigator()
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SearchBar">
-        <Stack.Screen name="SearchBar" component={SearchBarScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="SearchBar">
+          <Stack.Screen name="SearchBar" component={SearchBarScreen} />
+          <Stack.Screen name="SearchResult" component={SearchResultScreen} />
+          <Stack.Screen name="MovieDetails" component={MovieDetailsScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
