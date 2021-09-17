@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Image, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { fetchResults } from '../api';
 
 // need to be refactored out
-const Item = ({ title, year, poster }) => (
+const Item = ({ title, year, poster, navigation }) => (
   <View>
-    <Image
-      style={styles.tinyLogo}
-      source={{ uri: poster }}
-    />
-    <Text>{title}</Text>
-    <Text>{year}</Text>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("MovieDetails")}>
+      <Image
+        style={styles.tinyLogo}
+        source={{ uri: poster }}
+      />
+      <Text>{title}</Text>
+      <Text>{year}</Text>
+    </TouchableOpacity>
   </View>
 )
 
 // need to be refactored out
-const renderItem = ({ item }) => (
+const renderItem = ({ item }, navigation) => (
   <Item
     title={item.Title}
     year={item.Year}
     poster={item.Poster}
+    navigation={navigation}
   />
 )
 
@@ -46,11 +50,6 @@ export default function SearchResultScreen({ route, navigation }) {
       mounted = false
     }
   }, [])
-  // try {
-  //   getResults(movieTitle)
-  // } catch (err) {
-  //   console.log(err)
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,7 +61,7 @@ export default function SearchResultScreen({ route, navigation }) {
       /> */}
       <FlatList
         data={searchResults}
-        renderItem={renderItem}
+        renderItem={(item) => renderItem(item, navigation)}
         keyExtractor={item => item.imdbID}
       />
     </SafeAreaView>
