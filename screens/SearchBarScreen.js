@@ -19,7 +19,6 @@ export default function SearchBarScreen() {
 
       <TouchableOpacity 
         style= {styles.submitButton}
-        // onPress = { console.log(text)}>
         onPress = {() => navigation.navigate("SearchResult",
                                              { movieTitle: text })}>
           <Text style={styles.submitButtonText}> Submit </Text>
