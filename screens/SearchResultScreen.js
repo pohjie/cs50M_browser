@@ -4,16 +4,17 @@ import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TouchableOpacity
 import { fetchResults } from '../api';
 
 // need to be refactored out
-const Item = ({ title, year, poster, navigation }) => (
+const Item = ({ item, navigation }) => (
   <View>
     <TouchableOpacity
-      onPress={() => navigation.navigate("MovieDetails")}>
+      onPress={() => navigation.navigate("MovieDetails",
+                                          {item: item})}>
       <Image
         style={styles.tinyLogo}
-        source={{ uri: poster }}
+        source={{ uri: item.Poster }}
       />
-      <Text>{title}</Text>
-      <Text>{year}</Text>
+      <Text>{item.Title}</Text>
+      <Text>{item.Year}</Text>
     </TouchableOpacity>
   </View>
 )
@@ -21,9 +22,7 @@ const Item = ({ title, year, poster, navigation }) => (
 // need to be refactored out
 const renderItem = ({ item }, navigation) => (
   <Item
-    title={item.Title}
-    year={item.Year}
-    poster={item.Poster}
+    item={item}
     navigation={navigation}
   />
 )
@@ -53,13 +52,8 @@ export default function SearchResultScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text style={styles.text_header}>Search Results</Text>
-      <Text>{movieTitle}</Text>
-      <Button
-        title="Read more"
-        onPress={() => navigation.navigate("MovieDetails")}
-      /> */}
       <FlatList
+        contentContainerStyle={styles.flatList}
         data={searchResults}
         renderItem={(item) => renderItem(item, navigation)}
         keyExtractor={item => item.imdbID}
@@ -72,6 +66,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  flatList: {
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
